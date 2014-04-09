@@ -146,11 +146,21 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+
+<!--
     <repository>
       <id>cloudera-repo</id>
       <name>Cloudera Repository</name>
       <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
     </repository>
+-->
+
+    <repository>
+       <id>mapr-releases</id>
+       <url>http://repository.mapr.com/maven/</url>
+       <snapshots><enabled>false</enabled></snapshots>
+       <releases><enabled>true</enabled></releases>
+    </repository> 
   </repositories>
 
   <dependencyManagement>

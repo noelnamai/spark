@@ -29,7 +29,7 @@
 #   SPARK_NICENESS The scheduling priority for daemons. Defaults to 0.
 ##
 
-usage="Usage: spark-daemon.sh [--config <conf-dir>] (start|stop) <spark-command> <spark-instance-number> <args...>"
+usage="Usage: spark-daemon.sh [--config <conf-dir>] (start|stop|status) <spark-command> <spark-instance-number> <args...>"
 
 # if no args specified, show usage
 if [ $# -le 1 ]; then
@@ -62,7 +62,7 @@ then
   shift
 fi
 
-startStop=$1
+startStopStatus=$1
 shift
 command=$1
 shift
@@ -126,7 +126,7 @@ if [ "$SPARK_NICENESS" = "" ]; then
 fi
 
 
-case $startStop in
+case $startStopStatus in
 
   (start)
 
@@ -173,11 +173,30 @@ case $startStop in
     fi
     ;;
 
+  (status)
+
+    if [ -f $pid ]; then
+      TARGET_PID=`cat $pid`
+      if kill -0 $TARGET_PID > /dev/null 2>&1; then
+        echo $command is running.
+        exit 0
+      else
+        echo $pid file is present but $command not running.
+        exit 1
+      fi
+    else
+      echo $command not running.
+      exit 2
+    fi
+    ;;
+
   (*)
     echo $usage
     exit 1
     ;;
 
+  
 esac
+
 
 

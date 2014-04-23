@@ -21,6 +21,8 @@ import Keys._
 import sbtassembly.Plugin._
 import AssemblyKeys._
 import scala.util.Properties
+import scala.util.Properties.{ envOrNone => env }
+
 // For Sonatype publishing
 //import com.jsuereth.pgp.sbtplugin.PgpKeys._
 
@@ -264,7 +266,7 @@ object SparkBuild extends Build {
     name := "spark-core",
     resolvers ++= Seq(
        "MapR Repository" at MapRRepository,
-       "JBoss Repository"  at "http://repository.jboss.org/nexus/content/repositories/releases/",
+       "JBoss Repository"  at "http://repository.jboss.org/nexus/content/repositories/releases/"
     ),
 
     libraryDependencies ++= Seq(

@@ -41,7 +41,7 @@ object SparkBuild extends Build {
   val DEFAULT_YARN = false
 
   // HBase version; set as appropriate.
-  val HBASE_VERSION = "0.94.6"
+  val HBASE_VERSION = "0.94.17-mapr-1403"
 
   // Target JVM version
   val SCALAC_JVM_VERSION = "jvm-1.6"
@@ -314,9 +314,11 @@ object SparkBuild extends Build {
 
   def examplesSettings = sharedSettings ++ Seq(
     name := "spark-examples",
+    resolvers ++= Seq(
+         "MapR Repository" at MapRRepository,
+    ),
     libraryDependencies ++= Seq(
       "com.twitter"          %% "algebird-core"   % "0.1.11",
-      "org.apache.hbase"     %  "hbase"           % "0.94.6" excludeAll(excludeNetty, excludeAsm),
       "org.apache.hbase" % "hbase" % HBASE_VERSION excludeAll(excludeNetty, excludeAsm),
       "org.apache.cassandra" % "cassandra-all" % "1.2.6"
         exclude("com.google.guava", "guava")

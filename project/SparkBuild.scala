@@ -315,7 +315,7 @@ object SparkBuild extends Build {
   def examplesSettings = sharedSettings ++ Seq(
     name := "spark-examples",
     resolvers ++= Seq(
-         "MapR Repository" at MapRRepository,
+         "MapR Repository" at MapRRepository
     ),
     libraryDependencies ++= Seq(
       "com.twitter"          %% "algebird-core"   % "0.1.11",

@@ -30,7 +30,7 @@ object SparkBuild extends Build {
   // Hadoop version to build against. For example, "1.0.4" for Apache releases, or
   // "2.0.0-mr1-cdh4.2.0" for Cloudera Hadoop. Note that these variables can be set
   // through the environment variables SPARK_HADOOP_VERSION and SPARK_YARN.
-  val DEFAULT_HADOOP_VERSION = "1.0.3"
+  val DEFAULT_HADOOP_VERSION = "1.0.3-mapr-3.0.3"
 
   val DEFAULT_MAPR_REPOSITORY = "http://repository.mapr.com/maven/"
 
@@ -256,6 +256,8 @@ object SparkBuild extends Build {
 
   val slf4jVersion = "1.7.2"
 
+  val excludeMapRFs = ExclusionRule(organization = "com.mapr.hadoop")
+  val excludeMapRUtilCentralLogging = ExclusionRule(organization = "com.mapr.util")
   val excludeCglib = ExclusionRule(organization = "org.sonatype.sisu.inject")
   val excludeJackson = ExclusionRule(organization = "org.codehaus.jackson")
   val excludeNetty = ExclusionRule(organization = "org.jboss.netty")
@@ -287,10 +289,10 @@ object SparkBuild extends Build {
         "org.apache.mesos"         % "mesos"            % "0.13.0",
         "net.java.dev.jets3t"      % "jets3t"           % "0.7.1",
         "org.apache.derby"         % "derby"            % "10.4.2.0"                     % "test",
-	"org.apache.hadoop"        % "hadoop-core"      % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
+	"org.apache.hadoop"        % "hadoop-core"      % hadoopVersion excludeAll(excludeMapRFs, excludeMapRUtilCentralLogging, excludeJackson, excludeNetty, excludeAsm, excludeCglib),
         "org.apache.avro"          % "avro"             % "1.7.4",
         "org.apache.avro"          % "avro-ipc"         % "1.7.4" excludeAll(excludeNetty),
-        "org.apache.zookeeper"     % "zookeeper"        % "3.4.5" excludeAll(excludeNetty),
+        "org.apache.zookeeper"     % "zookeeper"        % "3.4.5-mapr-1401" excludeAll(excludeNetty),
         "com.codahale.metrics"     % "metrics-core"     % "3.0.0",
         "com.codahale.metrics"     % "metrics-jvm"      % "3.0.0",
         "com.codahale.metrics"     % "metrics-json"     % "3.0.0",
@@ -397,7 +399,7 @@ object SparkBuild extends Build {
   def yarnEnabledSettings = Seq(
     libraryDependencies ++= Seq(
       // Exclude rule required for all ?
-      "org.apache.hadoop" % "hadoop-core"        % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
+      "org.apache.hadoop" % "hadoop-core"        % hadoopVersion excludeAll(excludeMapRFs, excludeMapRUtilCentralLogging, excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-api"    % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-common" % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-client" % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib)

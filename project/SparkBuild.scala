@@ -28,7 +28,9 @@ object SparkBuild extends Build {
   // Hadoop version to build against. For example, "1.0.4" for Apache releases, or
   // "2.0.0-mr1-cdh4.2.0" for Cloudera Hadoop. Note that these variables can be set
   // through the environment variables SPARK_HADOOP_VERSION and SPARK_YARN.
-  val DEFAULT_HADOOP_VERSION = "1.0.4"
+  val DEFAULT_HADOOP_VERSION = "1.0.3-mapr-3.0.3"
+
+  val DEFAULT_MAPR_REPOSITORY = "http://repository.mapr.com/maven/"
 
   // Whether the Hadoop version to build against is 2.2.x, or a variant of it. This can be set
   // through the SPARK_IS_NEW_HADOOP environment variable.
@@ -37,11 +39,14 @@ object SparkBuild extends Build {
   val DEFAULT_YARN = false
 
   // HBase version; set as appropriate.
-  val HBASE_VERSION = "0.94.6"
+  val HBASE_VERSION = "0.94.17-mapr-1403"
 
   // Target JVM version
   val SCALAC_JVM_VERSION = "jvm-1.6"
   val JAVAC_JVM_VERSION = "1.6"
+
+  lazy val MapRRepository = env("MAVEN_CENTRAL") getOrElse
+                           DEFAULT_MAPR_REPOSITORY
 
   lazy val root = Project("root", file("."), settings = rootSettings) aggregate(allProjects: _*)
 
@@ -91,7 +96,7 @@ object SparkBuild extends Build {
     case Some(v) => v.toBoolean
   }
   lazy val hadoopClient = if (hadoopVersion.startsWith("0.20.") || hadoopVersion == "1.0.0") "hadoop-core" else "hadoop-client"
-
+  
   // Include Ganglia integration if the user has enabled Ganglia
   // This is isolated from the normal build due to LGPL-licensed code in the library
   lazy val isGangliaEnabled = Properties.envOrNone("SPARK_GANGLIA_LGPL").isDefined
@@ -249,6 +254,8 @@ object SparkBuild extends Build {
 
   val slf4jVersion = "1.7.2"
 
+  val excludeMapRFs = ExclusionRule(organization = "com.mapr.hadoop")
+  val excludeMapRUtilCentralLogging = ExclusionRule(organization = "com.mapr.util")
   val excludeCglib = ExclusionRule(organization = "org.sonatype.sisu.inject")
   val excludeJackson = ExclusionRule(organization = "org.codehaus.jackson")
   val excludeNetty = ExclusionRule(organization = "org.jboss.netty")
@@ -258,8 +265,8 @@ object SparkBuild extends Build {
   def coreSettings = sharedSettings ++ Seq(
     name := "spark-core",
     resolvers ++= Seq(
-       "JBoss Repository"     at "http://repository.jboss.org/nexus/content/repositories/releases/",
-       "Cloudera Repository"  at "https://repository.cloudera.com/artifactory/cloudera-repos/"
+       "MapR Repository" at MapRRepository,
+       "JBoss Repository"  at "http://repository.jboss.org/nexus/content/repositories/releases/"
     ),
 
     libraryDependencies ++= Seq(
@@ -281,10 +288,10 @@ object SparkBuild extends Build {
         "net.java.dev.jets3t"      % "jets3t"           % "0.7.1",
         "commons-codec"            % "commons-codec"    % "1.5", // Prevent jets3t from including the older version of commons-codec
         "org.apache.derby"         % "derby"            % "10.4.2.0"                     % "test",
-        "org.apache.hadoop"        % hadoopClient       % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
+	"org.apache.hadoop"        % "hadoop-core"      % hadoopVersion excludeAll(excludeMapRFs, excludeMapRUtilCentralLogging, excludeJackson, excludeNetty, excludeAsm, excludeCglib),
         "org.apache.avro"          % "avro"             % "1.7.4",
         "org.apache.avro"          % "avro-ipc"         % "1.7.4" excludeAll(excludeNetty),
-        "org.apache.zookeeper"     % "zookeeper"        % "3.4.5" excludeAll(excludeNetty),
+        "org.apache.zookeeper"     % "zookeeper"        % "3.4.5-mapr-1401" excludeAll(excludeNetty),
         "com.codahale.metrics"     % "metrics-core"     % "3.0.0",
         "com.codahale.metrics"     % "metrics-jvm"      % "3.0.0",
         "com.codahale.metrics"     % "metrics-json"     % "3.0.0",
@@ -308,9 +315,11 @@ object SparkBuild extends Build {
 
   def examplesSettings = sharedSettings ++ Seq(
     name := "spark-examples",
+    resolvers ++= Seq(
+         "MapR Repository" at MapRRepository
+    ),
     libraryDependencies ++= Seq(
       "com.twitter"          %% "algebird-core"   % "0.1.11",
-      "org.apache.hbase"     %  "hbase"           % "0.94.6" excludeAll(excludeNetty, excludeAsm),
       "org.apache.hbase" % "hbase" % HBASE_VERSION excludeAll(excludeNetty, excludeAsm),
       "org.apache.cassandra" % "cassandra-all" % "1.2.6"
         exclude("com.google.guava", "guava")
@@ -389,7 +398,7 @@ object SparkBuild extends Build {
   def yarnEnabledSettings = Seq(
     libraryDependencies ++= Seq(
       // Exclude rule required for all ?
-      "org.apache.hadoop" % hadoopClient         % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
+      "org.apache.hadoop" % "hadoop-core"        % hadoopVersion excludeAll(excludeMapRFs, excludeMapRUtilCentralLogging, excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-api"    % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-common" % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib),
       "org.apache.hadoop" % "hadoop-yarn-client" % hadoopVersion excludeAll(excludeJackson, excludeNetty, excludeAsm, excludeCglib)

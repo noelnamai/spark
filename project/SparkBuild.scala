@@ -21,6 +21,7 @@ import Keys._
 import sbtassembly.Plugin._
 import AssemblyKeys._
 import scala.util.Properties
+import scala.util.Properties.{ envOrNone => env }
 // For Sonatype publishing
 //import com.jsuereth.pgp.sbtplugin.PgpKeys._
 

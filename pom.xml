@@ -118,11 +118,11 @@
     <akka.version>2.2.3-shaded-protobuf</akka.version>
     <slf4j.version>1.7.5</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
-    <hadoop.version>1.0.4</hadoop.version>
+    <hadoop.version>2.3.0-mapr-4.0.0-FCS</hadoop.version>
     <protobuf.version>2.4.1</protobuf.version>
     <yarn.version>${hadoop.version}</yarn.version>
-    <hbase.version>0.94.6</hbase.version>
-    <zookeeper.version>3.4.5</zookeeper.version>
+    <hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>
+    <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
     <hive.version>0.12.0</hive.version>
     <parquet.version>1.4.3</parquet.version>
     <jblas.version>1.2.3</jblas.version>
@@ -251,9 +251,9 @@
         <version>3.3.2</version>
       </dependency>
       <dependency>
-	  <groupId>commons-codec</groupId>
-	    <artifactId>commons-codec</artifactId>
-	    <version>1.5</version>
+      <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.5</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -1031,11 +1031,30 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <hadoop.version>1.0.3-mapr-3.0.3</hadoop.version>
-        <yarn.version>2.3.0-mapr-4.0.0-beta</yarn.version>
-        <hbase.version>0.94.17-mapr-1403</hbase.version>
-        <zookeeper.version>3.4.5-mapr-1401</zookeeper.version>
+        <hadoop.version>2.3.0-mapr-4.0.0-FCS</hadoop.version>
+        <yarn.version>2.3.0-mapr-4.0.0-FCS</yarn.version>
+        <hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>
+        <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
       </properties>
+      <dependencies>
+         <dependency>
+           <groupId>org.apache.curator</groupId>
+           <artifactId>curator-recipes</artifactId>
+           <version>2.4.0</version>
+           <exclusions>
+         <exclusion>
+               <groupId>org.apache.zookeeper</groupId>
+                   <artifactId>zookeeper</artifactId>
+             </exclusion>
+               </exclusions>
+         </dependency>
+         <dependency>
+          <groupId>org.apache.zookeeper</groupId>
+              <artifactId>zookeeper</artifactId>
+              <version>3.4.5-mapr-1406</version> 
+         </dependency>
+      </dependencies>
+
     </profile>
 
     <!-- Build without Hadoop dependencies that are included in some runtime environments. -->
@@ -1091,3 +1110,4 @@
 
   </profiles>
 </project>
+

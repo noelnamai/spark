@@ -47,7 +47,7 @@ FWDIR="$(cd `dirname $0`; pwd)"
 DISTDIR="$FWDIR/dist"
 
 # Initialize defaults
-SPARK_HADOOP_VERSION=1.0.4
+SPARK_HADOOP_VERSION=2.3.0-mapr-4.0.0-FCS
 SPARK_YARN=false
 SPARK_HIVE=false
 SPARK_TACHYON=false
@@ -165,6 +165,7 @@ if [[ "$SPARK_YARN" == "true" ]]; then
   BUILD_COMMAND="$BUILD_COMMAND -Dyarn.version=$SPARK_HADOOP_VERSION"
 fi
 BUILD_COMMAND="$BUILD_COMMAND -Dhadoop.version=$SPARK_HADOOP_VERSION"
+BUILD_COMMAND="mvn clean package -Pmapr -Phive -U"
 BUILD_COMMAND="$BUILD_COMMAND -DskipTests"
 
 # Actually build the jar
@@ -243,3 +244,4 @@ if [ "$MAKE_TGZ" == "true" ]; then
   tar czf "spark-$VERSION-bin-$NAME.tgz" -C "$FWDIR" "$TARDIR_NAME"
   rm -rf "$TARDIR"
 fi
+

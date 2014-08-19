@@ -197,12 +197,14 @@
     <repository>
       <id>mapr-repo</id>
       <name>MapR Repository</name>
-      <url>http://repository.mapr.com/maven</url>
+      <!-- <url>http://repository.mapr.com/maven</url> -->
+      <url>http://maven.corp.maprtech.com/nexus/content/groups/public/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
       <snapshots>
-        <enabled>false</enabled>
+        <!-- enabling snapshots. Disable during release time -->
+        <enabled>true</enabled>
       </snapshots>
     </repository>
     <repository>
@@ -1031,11 +1033,30 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <hadoop.version>1.0.3-mapr-3.0.3</hadoop.version>
-        <yarn.version>2.3.0-mapr-4.0.0-beta</yarn.version>
-        <hbase.version>0.94.17-mapr-1403</hbase.version>
-        <zookeeper.version>3.4.5-mapr-1401</zookeeper.version>
+        <hadoop.version>2.4.1-mapr-4.0.1-SNAPSHOT</hadoop.version>
+        <yarn.version>2.4.1-mapr-4.0.1-SNAPSHOT</yarn.version>
+        <hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>
+        <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
+        <protobuf.version>2.5.0</protobuf.version>
       </properties>
+      <dependencies>
+         <dependency>
+           <groupId>org.apache.curator</groupId>
+           <artifactId>curator-recipes</artifactId>
+           <version>2.4.0</version>
+           <exclusions>
+             <exclusion>
+               <groupId>org.apache.zookeeper</groupId>
+               <artifactId>zookeeper</artifactId>
+             </exclusion>
+           </exclusions>
+         </dependency>
+         <dependency>
+          <groupId>org.apache.zookeeper</groupId>
+              <artifactId>zookeeper</artifactId>
+              <version>3.4.5-mapr-1406</version>
+         </dependency>
+      </dependencies> 
     </profile>
 
     <!-- Build without Hadoop dependencies that are included in some runtime environments. -->

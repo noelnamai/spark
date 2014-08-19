@@ -165,6 +165,7 @@ if [[ "$SPARK_YARN" == "true" ]]; then
   BUILD_COMMAND="$BUILD_COMMAND -Dyarn.version=$SPARK_HADOOP_VERSION"
 fi
 BUILD_COMMAND="$BUILD_COMMAND -Dhadoop.version=$SPARK_HADOOP_VERSION"
+BUILD_COMMAND="mvn clean package -Pmapr -Pyarn -U"
 BUILD_COMMAND="$BUILD_COMMAND -DskipTests"
 
 # Actually build the jar

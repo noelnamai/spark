@@ -47,7 +47,7 @@ FWDIR="$(cd `dirname $0`; pwd)"
 DISTDIR="$FWDIR/dist"
 
 # Initialize defaults
-SPARK_HADOOP_VERSION=1.0.4
+SPARK_HADOOP_VERSION=2.4.1-mapr-4.0.1-SNAPSHOT
 SPARK_YARN=false
 SPARK_HIVE=false
 SPARK_TACHYON=false

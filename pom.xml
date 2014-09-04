@@ -1033,8 +1033,8 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <hadoop.version>2.4.1-mapr-4.0.1-SNAPSHOT</hadoop.version>
-        <yarn.version>2.4.1-mapr-4.0.1-SNAPSHOT</yarn.version>
+        <hadoop.version>2.4.1-mapr-1408</hadoop.version>
+        <yarn.version>2.4.1-mapr-1408</yarn.version>
         <hbase.version>0.94.17-mapr-1405-4.0.0-FCS</hbase.version>
         <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
         <protobuf.version>2.5.0</protobuf.version>

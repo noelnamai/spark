@@ -141,6 +141,7 @@ if [[ ! "$JAVA_VERSION" =~ "1.6" && -z "$SKIP_JAVA_TEST" ]]; then
   fi
 fi
 
+SPARK_HADOOP_VERSION=2.4.1-mapr-1408
 if [ "$NAME" == "none" ]; then
   NAME=$SPARK_HADOOP_VERSION
 fi
@@ -164,7 +165,7 @@ cd "$FWDIR"
 
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 
-BUILD_COMMAND="mvn clean package -DskipTests $@"
+BUILD_COMMAND="mvn clean package -DskipTests -U -Pmapr4"
 
 # Actually build the jar
 echo -e "\nBuilding with..."

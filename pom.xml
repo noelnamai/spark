@@ -1120,7 +1120,7 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <hadoop.version>1.0.3-mapr-3.1.1</hadoop.version>
+        <hadoop.version>1.0.3-mapr-3.0.3</hadoop.version>
         <yarn.version>2.4.1-mapr-1408</yarn.version>
         <hbase.version>0.94.21-mapr-1407</hbase.version>
         <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>

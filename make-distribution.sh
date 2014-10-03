@@ -141,7 +141,7 @@ if [[ ! "$JAVA_VERSION" =~ "1.6" && -z "$SKIP_JAVA_TEST" ]]; then
   fi
 fi
 
-SPARK_HADOOP_VERSION=1.0.3-mapr-3.1.1
+SPARK_HADOOP_VERSION=1.0.3-mapr-3.0.3
 if [ "$NAME" == "none" ]; then
   NAME=$SPARK_HADOOP_VERSION
 fi

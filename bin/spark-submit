@@ -39,6 +39,9 @@ while (($#)); do
   shift
 done
 
+#Append the native library path for MapR
+export SPARK_SUBMIT_LIBRARY_PATH=$SPARK_SUBMIT_LIBRARY_PATH:`hadoop jnipath`
+
 DEFAULT_PROPERTIES_FILE="$SPARK_HOME/conf/spark-defaults.conf"
 export SPARK_SUBMIT_DEPLOY_MODE=${SPARK_SUBMIT_DEPLOY_MODE:-"client"}
 export SPARK_SUBMIT_PROPERTIES_FILE=${SPARK_SUBMIT_PROPERTIES_FILE:-"$DEFAULT_PROPERTIES_FILE"}

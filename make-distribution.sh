@@ -165,7 +165,7 @@ cd "$FWDIR"
 
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 
-BUILD_COMMAND="mvn clean package -DskipTests -U -Pmapr3"
+BUILD_COMMAND="mvn clean package -DskipTests -U -Pmapr3 -Phive"
 
 # Actually build the jar
 echo -e "\nBuilding with..."

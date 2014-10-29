@@ -756,6 +756,37 @@
         <artifactId>jackson-mapper-asl</artifactId>
         <version>1.8.8</version>
       </dependency>
+      <dependency>  
+        <groupId>org.apache.hive</groupId>
+        <artifactId>hive-exec</artifactId>
+        <version>${hive.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hive</groupId>
+        <artifactId>hive-metastore</artifactId>
+        <version>${hive.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hive</groupId>
+        <artifactId>hive-serde</artifactId>
+        <version>${hive.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>  
     </dependencies>
   </dependencyManagement>
 
@@ -1125,6 +1156,7 @@
         <hbase.version>0.94.21-mapr-1407</hbase.version>
         <zookeeper.version>3.4.5-mapr-1406</zookeeper.version>
         <protobuf.version>2.4.1</protobuf.version>
+        <hive.version>0.12-mapr-1408</hive.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1142,6 +1174,24 @@
           <groupId>org.apache.zookeeper</groupId>
           <artifactId>zookeeper</artifactId>
           <version>${zookeeper.version}</version>
+        </dependency> 
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-exec</artifactId>
+            <version>${hive.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-metastore</artifactId>
+            <version>${hive.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-serde</artifactId>
+            <version>${hive.version}</version>
+            <scope>provided</scope>
         </dependency> 
       </dependencies>
     </profile>

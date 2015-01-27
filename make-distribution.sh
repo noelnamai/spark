@@ -116,7 +116,8 @@ if ! which mvn &>/dev/null; then
 fi
 
 VERSION=$(mvn help:evaluate -Dexpression=project.version 2>/dev/null | grep -v "INFO" | tail -n 1)
-SPARK_HADOOP_VERSION=$(mvn help:evaluate -Dexpression=hadoop.version $@ 2>/dev/null\
+# MVN_PROFILE_ARG should be set to activate the right profile
+SPARK_HADOOP_VERSION=$(mvn $MVN_PROFILE_ARG help:evaluate -Dexpression=hadoop.version $@ 2>/dev/null\
     | grep -v "INFO"\
     | tail -n 1)
 SPARK_HIVE=$(mvn help:evaluate -Dexpression=project.activeProfiles -pl sql/hive $@ 2>/dev/null\
@@ -165,7 +166,7 @@ cd "$FWDIR"
 
 export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 
-BUILD_COMMAND="mvn clean package -DskipTests $@"
+BUILD_COMMAND="mvn clean package -DskipTests $MVN_PROFILE_ARG $@"
 
 # Actually build the jar
 echo -e "\nBuilding with..."

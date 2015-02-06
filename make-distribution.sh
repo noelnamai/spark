@@ -131,7 +131,7 @@ VERSION=$("$MVN" help:evaluate -Dexpression=project.version 2>/dev/null | grep -
 SPARK_HADOOP_VERSION=$("$MVN" "$MVN_PROFILE_ARG" help:evaluate -Dexpression=hadoop.version $@ 2>/dev/null\
     | grep -v "INFO"\
     | tail -n 1)
-SPARK_HIVE=$("$MVN" help:evaluate -Dexpression=project.activeProfiles -pl sql/hive $@ 2>/dev/null\
+SPARK_HIVE=$("$MVN" "$MVN_PROFILE_ARG" help:evaluate -Dexpression=project.activeProfiles -pl sql/hive $@ 2>/dev/null\
     | grep -v "INFO"\
     | fgrep --count "<id>hive</id>";\
     # Reset exit status to 0, otherwise the script stops here if the last grep finds nothing\

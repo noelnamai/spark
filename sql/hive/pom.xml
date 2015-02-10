@@ -50,6 +50,7 @@
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-metastore</artifactId>
       <version>${hive.version}</version>
+      <scope>${hive.scope}</scope>
     </dependency>
     <dependency>
       <groupId>commons-httpclient</groupId>
@@ -60,6 +61,7 @@
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-exec</artifactId>
       <version>${hive.version}</version>
+      <scope>${hive.scope}</scope>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -79,6 +81,7 @@
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-serde</artifactId>
       <version>${hive.version}</version>
+      <scope>${hive.scope}</scope>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>

@@ -170,6 +170,20 @@
 
   <profiles>
     <profile>
+      <id>hadoop-provided</id>
+      <properties>
+        <hadoop.scope>provided</hadoop.scope>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>hive-provided</id>
+      <properties>
+        <hive.scope>provided</hive.scope>
+      </properties>
+    </profile>
+
+    <profile>
       <id>yarn-alpha</id>
       <dependencies>
         <dependency>

@@ -22,6 +22,7 @@ import java.util.concurrent.Executors
 import org.apache.commons.logging.Log
 import org.apache.hadoop.hive.conf.HiveConf
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars
+import org.apache.hive.service.cli.log.LogManager
 import org.apache.hive.service.cli.session.SessionManager
 
 import org.apache.spark.sql.hive.HiveContext
@@ -45,6 +46,10 @@ private[hive] class SparkSQLSessionManager(hiveContext: HiveContext)
 
     setSuperField(this, "operationManager", sparkSqlOperationManager)
     addService(sparkSqlOperationManager)
+
+    val sparkSqlLogManager = new LogManager()
+    setSuperField(this, "logManager", sparkSqlLogManager)
+    addService(sparkSqlLogManager)
 
     initCompositeService(hiveConf)
   }

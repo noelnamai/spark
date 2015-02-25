@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+SPARK_SCALA_VERSION=2.10
+
 # This script computes Spark's classpath and prints it to stdout; it's used by both the "run"
 # script and the ExecutorRunner in standalone cluster mode.
 

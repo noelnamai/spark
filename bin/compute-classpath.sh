@@ -37,15 +37,17 @@ function appendToClasspath(){
   fi
 }
 
-appendToClasspath "$SPARK_CLASSPATH"
-appendToClasspath "$SPARK_SUBMIT_CLASSPATH"
-
 # Build up classpath
 if [ -n "$SPARK_CONF_DIR" ]; then
   appendToClasspath "$SPARK_CONF_DIR"
 else
   appendToClasspath "$FWDIR/conf"
 fi
+
+# Add the external jars after adding spark conf so that Spark's log4j.properties
+appendToClasspath "$SPARK_CLASSPATH"
+appendToClasspath "$SPARK_SUBMIT_CLASSPATH"
+
 
 ASSEMBLY_DIR="$FWDIR/assembly/target/scala-$SPARK_SCALA_VERSION"
 

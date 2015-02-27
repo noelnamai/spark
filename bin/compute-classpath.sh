@@ -27,7 +27,6 @@ FWDIR="$(cd "`dirname "$0"`"/..; pwd)"
 
 . "$FWDIR"/bin/load-spark-env.sh
 
-CLASSPATH="$SPARK_CLASSPATH:$SPARK_SUBMIT_CLASSPATH"
 
 # Build up classpath
 if [ -n "$SPARK_CONF_DIR" ]; then
@@ -35,6 +34,10 @@ if [ -n "$SPARK_CONF_DIR" ]; then
 else
   CLASSPATH="$CLASSPATH:$FWDIR/conf"
 fi
+
+# Add the external jars after adding spark conf so that Spark's log4j.properties
+# is picked up.
+CLASSPATH="$CLASSPATH:$SPARK_CLASSPATH:$SPARK_SUBMIT_CLASSPATH"
 
 ASSEMBLY_DIR="$FWDIR/assembly/target/scala-$SPARK_SCALA_VERSION"
 

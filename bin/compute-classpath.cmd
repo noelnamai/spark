@@ -36,13 +36,16 @@ rem Load environment variables from conf\spark-env.cmd, if it exists
 if exist "%FWDIR%conf\spark-env.cmd" call "%FWDIR%conf\spark-env.cmd"
 
 rem Build up classpath
-set CLASSPATH=%SPARK_CLASSPATH%;%SPARK_SUBMIT_CLASSPATH%
 
 if not "x%SPARK_CONF_DIR%"=="x" (
   set CLASSPATH=%CLASSPATH%;%SPARK_CONF_DIR%
 ) else (
   set CLASSPATH=%CLASSPATH%;%FWDIR%conf
 )
+
+rem Add the external jars after adding spark conf so that Spark's log4j.properties
+rem is picked up.
+set CLASSPATH=%CLASSPATH%;%SPARK_CLASSPATH%;%SPARK_SUBMIT_CLASSPATH%
 
 if exist "%FWDIR%RELEASE" (
   for %%d in ("%FWDIR%lib\spark-assembly*.jar") do (

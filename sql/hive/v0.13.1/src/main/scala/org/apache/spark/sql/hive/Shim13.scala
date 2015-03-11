@@ -63,7 +63,8 @@ private[hive] case class HiveFunctionWrapper(var functionClassName: String)
   def this() = this(null)
 
   import java.io.{OutputStream, InputStream}
-  import com.esotericsoftware.kryo.Kryo
+  // HIVE-5915: Handle package shading
+  import org.apache.hive.com.esotericsoftware.kryo.Kryo
   import org.apache.spark.util.Utils._
   import org.apache.hadoop.hive.ql.exec.Utilities
   import org.apache.hadoop.hive.ql.exec.UDF

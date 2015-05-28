@@ -294,7 +294,10 @@ class ExecutorRunnable(
     val httpScheme = if (UserGroupInformation.isSecurityEnabled) "https" else "http"
     sys.env.get("SPARK_USER").foreach { user =>
       val baseUrl = "%s://%s/node/containerlogs/%s/%s"
-        .format(httpScheme, container.getNodeHttpAddress, ConverterUtils.toString(container.getId), user)
+        .format(httpScheme,
+          container.getNodeHttpAddress,
+          ConverterUtils.toString(container.getId),
+          user)
       env("SPARK_LOG_URL_STDERR") = s"$baseUrl/stderr?start=0"
       env("SPARK_LOG_URL_STDOUT") = s"$baseUrl/stdout?start=0"
     }
